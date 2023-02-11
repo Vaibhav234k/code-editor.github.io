@@ -1,0 +1,132 @@
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./index.css" />
+  <script
+    src="https://kit.fontawesome.com/086e514b71.js"
+    crossorigin="anonymous"
+  ></script>
+</head>
+<body class="bg-gray-900">
+  <div class="container">
+    <div class="left">
+      <ul
+        class="flex flex-row text-sm text-bold font-medium text-center text-gray-500 border-gray-700"
+      >
+        <li class="mr-2">
+          <a
+            id="html-tab"
+            data-toggle="tab"
+            data-select="one"
+            href="#html-code"
+            aria-current="page"
+            class="active inline-block p-4 rounded-t-lg bg-gray-800 text-blue-500"
+            ><i class="fa-brands fa-html5"></i> &nbsp;HTML</a
+          >
+        </li>
+        <li class="mr-2">
+          <a
+            id="css-tab"
+            data-select="two"
+            data-toggle="tab"
+            href="#css-code"
+            class="inline-block p-4 rounded-t-lg hover:bg-gray-800"
+            ><i class="fa-brands fa-css3-alt"></i> &nbsp;CSS</a
+          >
+        </li>
+        <li class="mr-2">
+          <a
+            data-select="three"
+            id="js-tab"
+            data-toggle="tab"
+            href="#js-code"
+            class="inline-block p-4 rounded-t-lg hover:bg-gray-800"
+            ><i class="fa-brands fa-square-js"></i> &nbsp;JS</a
+          >
+        </li>
+      </ul>
+      <div class="tab-content text-white" id="tab-content">
+        <div id="html-code" class="tab-pane fade">
+          <textarea
+            name="html"
+            id="html"
+            onkeyup="run()"
+            class="mt-5 p-3 bg-gray-800"
+          ></textarea>
+        </div>
+        <div id="css-code" class="tab-pane fade">
+          <textarea
+            name="css"
+            id="css"
+            onkeyup="run()"
+            class="mt-5 p-3 bg-gray-800"
+          ></textarea>
+        </div>
+        <div id="js-code" class="tab-pane fade">
+          <textarea
+            name="js"
+            id="js"
+            onkeyup="run()"
+            class="mt-5 p-3 bg-gray-800"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <label for="output" class="mx-8 text-gray-500"
+        ><i class="fa-solid fa-play"></i> &nbsp;Output</label
+      >
+      <iframe id="output" class="bg-gray-100"></iframe>
+    </div>
+  </div>
+</body>
+<script
+  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+  type="text/javascript"
+></script>
+<script type="text/javascript">
+  document.getElementById("html-tab").onclick = function () {
+    showTab(this);
+  };
+  document.getElementById("css-tab").onclick = function () {
+    showTab(this);
+  };
+  document.getElementById("js-tab").onclick = function () {
+    showTab(this);
+  };
+  function showTab(e) {
+    let selectType = $(e).attr("data-select");
+    if (selectType == "one") {
+      $("#css-code,#js-code").hide();
+      $("#html-code").show();
+      $("#html-tab").addClass("text-blue-500 bg-gray-800 active");
+      $("#js-tab,#css-tab").removeClass("text-blue-500 bg-gray-800 active");
+    } else if (selectType == "two") {
+      $("#html-code,#js-code").hide();
+      $("#css-code").show();
+      $("#css-tab").addClass("text-blue-500 bg-gray-800 active");
+      $("#js-tab,#html-tab").removeClass("text-blue-500 bg-gray-800 active");
+    } else {
+      $("#css-code,#html-code").hide();
+      $("#js-code").show();
+      $("#js-tab").addClass("text-blue-500 bg-gray-800 active");
+      $("#html-tab,#css-tab").removeClass("text-blue-500 bg-gray-800 active");
+    }
+  }
+  function run() {
+    let htmlCode = document.getElementById("html").value;
+    let cssCode = document.getElementById("css").value;
+    let jsCode = document.getElementById("js").value;
+    let output = document.getElementById("output");
+
+    output.contentDocument.body.innerHTML =
+      htmlCode + "<style>" + cssCode + "</style>";
+    output.contentWindow.eval(jsCode);
+  }
+  function setup() {
+    $("#css-code,#js-code").hide();
+  }
+  window.onload = setup();
+</script>
